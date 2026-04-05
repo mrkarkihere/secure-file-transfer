@@ -10,6 +10,9 @@
 #include <cstring>
 
 struct file_header{
-    char file_name[256];
+    char source[256];
+    char destination[256];
     ssize_t file_size;
 };
+
+#define CHUNK_SIZE 1

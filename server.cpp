@@ -7,8 +7,29 @@ void handle_client(int fd, struct sockaddr_in* addr, socklen_t addrlen){
     ssize_t header_bytes = recv(fd, &file_metadata, sizeof(file_metadata), 0);
 
     if(header_bytes > 0){
-        std::cout << "File Name: " << file_metadata.file_name << std::endl;
-        std::cout << "File Size: " << file_metadata.file_size << std::endl;
+        std::cout << "Source: " << file_metadata.source << std::endl;
+        std::cout << "Destination: " << file_metadata.destination << std::endl;
+        std::cout << "File Size: " << file_metadata.file_size << " bytes" << std::endl;
+        
+        // just create the output file, dont write to it yet
+        FILE* file_ptr = fopen(file_metadata.destination, "wb");
+        ssize_t total_bytes = 0;
+        // receive bytes
+        while(total_bytes < file_metadata.file_size){
+            char buffer[CHUNK_SIZE];
+            ssize_t bytes_recv = recv(fd, &buffer[0], sizeof(buffer), 0);
+            // connection ended or receive failed
+            if(bytes_recv <= 0){
+                break;
+            }
+            total_bytes += bytes_recv;
+            fwrite(buffer, sizeof(char), bytes_recv, file_ptr);
+        }
+        if(total_bytes == file_metadata.file_size){
+            std::cout << "Received all bytes correctly" << std::endl;
+        }
+        fclose(file_ptr);
+
     }
     else{
         std::cout << "Didn't receive bytes correctly" << std::endl;
