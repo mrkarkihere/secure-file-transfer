@@ -23,8 +23,8 @@ int main(){
         std::cout << "Successfully connected to server!\n";
 
         // send header packet
-        char* source = "source/plaintext.txt";
-        char* destination = "destination/output.txt";
+        const char* source = "source/plaintext.txt";
+        const char* destination = "destination/output.txt";
 
         struct file_header file_metadata;
         strcpy(file_metadata.source, source);

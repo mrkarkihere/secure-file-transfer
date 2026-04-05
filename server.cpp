@@ -2,7 +2,7 @@
 #include <thread>
 
 //
-void handle_client(int fd, struct sockaddr_in* addr, socklen_t addrlen){
+void handle_client(int fd, struct sockaddr_in addr, socklen_t addrlen){
     struct file_header file_metadata;
     ssize_t header_bytes = recv(fd, &file_metadata, sizeof(file_metadata), 0);
 
@@ -68,7 +68,7 @@ int main(){
 
         if(client_fd != -1){
             std::cout << "Connection established with FD " << std::to_string(client_fd) << "\n";
-            std::thread t(handle_client, client_fd, &clientaddr, addrlen);
+            std::thread t(handle_client, client_fd, clientaddr, addrlen);
             t.detach();
         }
     }
