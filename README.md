@@ -25,10 +25,14 @@ note to self: now that i think of it, i might do the 'secure' part as well
 ## usage
 
 ```bash
+# build project
+./run.sh
+
 # start the server first
-./server
+./build/server
 
 # in another terminal, run the client
-./client <source_file> <destination_path>
+./build/client <source_file> <destination_path>
+```
 
 it aint much but its honest work

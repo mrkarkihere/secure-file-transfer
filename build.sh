@@ -1,2 +1,3 @@
-clang++ -std=c++20 -o server server.cpp
-clang++ -std=c++20 -o client client.cpp 
+mkdir build
+clang++ -std=c++20 -o ./build/server ./src/server.cpp
+clang++ -std=c++20 -o ./build/client ./src/client.cpp 
